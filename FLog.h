@@ -67,16 +67,16 @@ public:
         cache.append("\n/--- Path : ");
         cache.append(path);
         cache.append(" ---/");
-		cache.append("\n/--- Creation Date : ");
-		cache.append(currentDateTime());
-		cache.append(" ---/\n\n");
+	cache.append("\n/--- Creation Date : ");
+	cache.append(currentDateTime());
+	cache.append(" ---/\n\n");
         fpath = path;
     }
     
     inline void append(std::string str) {
         cache.append("\n");
-		cache.append(currentDateTime());
-		cache.append(" : ");
+	cache.append(currentDateTime());
+	cache.append(" : ");
         cache.append(str);
         cache.append("\n");
         if (auto_s) {
@@ -86,8 +86,8 @@ public:
 	
 	inline void append(int str) {
         cache.append("\n");
-		cache.append(currentDateTime());
-		cache.append(" : ");
+	cache.append(currentDateTime());
+	cache.append(" : ");
         cache.append(std::to_string(str));
         cache.append("\n");
         if (auto_s) {
@@ -102,11 +102,11 @@ public:
 		cache.append("\n");
 		cache.append(currentDateTime());
 		cache.append(" : ");
-        cache.append(memr);
-        cache.append("\n");
-        if (auto_s) {
-            this->save(NEW_LOG);
-        }
+		cache.append(memr);
+		cache.append("\n");
+		if (auto_s) {
+			this->save(NEW_LOG);
+		}
 	}
 	
     inline std::string get_address_str() {
