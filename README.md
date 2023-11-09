@@ -5,13 +5,12 @@
 
 ## Example:
 ```cpp
-#include "FLog.h"
+#include "FLog.h" //includes the FLog library
 
-FLog* logger;
+FLog* logger = new FLog("/storage/logs.txt"); //creates FLog instance.
+
 
 int main() {
-
-   logger = new FLog("/storage/logs.txt"); //creates FLog instance.
 
    logger->autosave(true); //enables auto save, it's off by default.
 
