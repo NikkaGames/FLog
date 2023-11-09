@@ -85,15 +85,15 @@ public:
     }
 	
 	inline void append(int str) {
-        cache.append("\n");
-	cache.append(currentDateTime());
-	cache.append(" : ");
-        cache.append(std::to_string(str));
-        cache.append("\n");
-        if (auto_s) {
-            this->save(NEW_LOG);
-        }
-    }
+		cache.append("\n");
+		cache.append(currentDateTime());
+		cache.append(" : ");
+		cache.append(std::to_string(str));
+		cache.append("\n");
+		if (auto_s) {
+			this->save(NEW_LOG);
+		}
+	}
 	
 	template<typename ...Args>
 	inline void append_arg(std::string str, Args ...args) {
