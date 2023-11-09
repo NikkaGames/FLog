@@ -7,7 +7,7 @@
 ```cpp
 #include "FLog.h"
 
-FLog* logger:
+FLog* logger;
 
 int main() {
 
