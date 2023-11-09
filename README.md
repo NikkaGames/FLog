@@ -7,8 +7,8 @@
 ```cpp
 #include "FLog.h" //includes the FLog library
 
-FLog* logger = new FLog("/storage/logs.txt"); //creates FLog instance.
 
+FLog* logger = new FLog("/storage/logs.txt"); //creates FLog instance.
 
 int main() {
 
