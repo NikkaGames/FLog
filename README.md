@@ -7,9 +7,11 @@
 ```cpp
 #include "FLog.h"
 
-FLog* logger = new FLog("/storage/logs.txt");
+FLog* logger:
 
 int main() {
+
+   logger = new FLog("/storage/logs.txt"); //creates FLog instance.
 
    logger->autosave(true); //enables auto save, it's off by default.
 
