@@ -32,26 +32,6 @@ This library will work without any issues on Android and Linux platform, not sur
 #define MAX_LEN 524288
 typedef int S_MODE;
 
-bool file_exists(const std::string& name) {
-  struct stat buffer;   
-  return (stat(name.c_str(), &buffer) == 0); 
-}
-
-long get_file_size(std::string filename) {
-    struct stat stat_buf;
-    int rc = stat(filename.c_str(), &stat_buf);
-    return rc == 0 ? stat_buf.st_size : -1;
-}
-
-std::string currentDateTime() {
-    time_t now = time(0);
-    struct tm tstruct;
-    char buf[128];
-    tstruct = *localtime(&now);
-    strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
-    return buf;
-}
-
 class FLog {
 private:
     std::string fpath, cache;
@@ -68,14 +48,24 @@ public:
         cache.append(path);
         cache.append(" ---/");
 	cache.append("\n/--- Creation Date : ");
-	cache.append(currentDateTime());
+	time_t now = time(0);
+	struct tm tstruct;
+	char buf[128];
+	tstruct = *localtime(&now);
+	strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
+	cache.append(std::string(buf));
 	cache.append(" ---/\n\n");
         fpath = path;
     }
     
     inline void append(std::string str) {
         cache.append("\n");
-	cache.append(currentDateTime());
+	time_t now = time(0);
+	struct tm tstruct;
+	char buf[128];
+	tstruct = *localtime(&now);
+	strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
+	cache.append(std::string(buf));
 	cache.append(" : ");
         cache.append(str);
         cache.append("\n");
@@ -83,31 +73,60 @@ public:
             this->save(NEW_LOG);
         }
     }
-	
-	inline void append(int str) {
-		cache.append("\n");
-		cache.append(currentDateTime());
-		cache.append(" : ");
-		cache.append(std::to_string(str));
-		cache.append("\n");
-		if (auto_s) {
-			this->save(NEW_LOG);
-		}
+
+    inline void append(int str) {
+	cache.append("\n");
+	time_t now = time(0);
+	struct tm tstruct;
+	char buf[128];
+	tstruct = *localtime(&now);
+	strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
+	cache.append(std::string(buf));
+	cache.append(" : ");
+	cache.append(std::to_string(str));
+	cache.append("\n");
+	if (auto_s) {
+	    this->save(NEW_LOG);
 	}
+    }
 	
-	template<typename ...Args>
-	inline void append_arg(std::string str, Args ...args) {
-		char memr[MAX_LEN];
-		sprintf(memr, str.c_str(), args...);
-		cache.append("\n");
-		cache.append(currentDateTime());
-		cache.append(" : ");
-		cache.append(memr);
-		cache.append("\n");
-		if (auto_s) {
-			this->save(NEW_LOG);
-		}
+    template<typename ...Args>
+    inline void append_arg(std::string str, Args ...args) {
+	char memr[MAX_LEN];
+	sprintf(memr, str.c_str(), args...);
+	cache.append("\n");
+	time_t now = time(0);
+	struct tm tstruct;
+	char buf[128];
+	tstruct = *localtime(&now);
+	strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
+	cache.append(std::string(buf));
+	cache.append(" : ");
+	cache.append(memr);
+	cache.append("\n");
+	if (auto_s) {
+	    this->save(NEW_LOG);
 	}
+    }
+
+    template<typename ...Args>
+    inline void append_arg_mode(std::string str, int modee, Args ...args) {
+	char memr[MAX_LEN];
+	sprintf(memr, str.c_str(), args...);
+	cache.append("\n");
+	time_t now = time(0);
+	struct tm tstruct;
+	char buf[128];
+	tstruct = *localtime(&now);
+	strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
+	cache.append(std::string(buf));
+	cache.append(" : ");
+	cache.append(memr);
+        cache.append("\n");
+        if (auto_s) {
+            this->save(modee);
+        }
+    }
 	
     inline std::string get_address_str() {
         return std::string(instance_address);
@@ -126,7 +145,8 @@ public:
     }
     
     inline void erase() {
-        if (file_exists(fpath) && get_file_size(fpath) > 0) {
+	struct stat buffer, stat_buf;
+        if ((stat(fpath.c_str(), &buffer) == 0) && (stat(fpath.c_str(), &stat_buf) == 0 ? stat_buf.st_size : -1) > 0) {
             remove(fpath.c_str());
         }
     }
@@ -138,7 +158,8 @@ public:
         } else if (mode == APPEND_LOG) {
             std::ifstream in(fpath.c_str());
             std::stringstream data;
-            if (file_exists(fpath) && get_file_size(fpath) > 0) {
+	    struct stat buffer, stat_buf;
+            if ((stat(fpath.c_str(), &buffer) == 0) && (stat(fpath.c_str(), &stat_buf) == 0 ? stat_buf.st_size : -1) > 0) {
                 data << in.rdbuf();
                 data << "\n";
                 data << cache;
