@@ -47,26 +47,26 @@ public:
         cache.append("\n/--- Path : ");
         cache.append(path);
         cache.append(" ---/");
-	cache.append("\n/--- Creation Date : ");
-	time_t now = time(0);
-	struct tm tstruct;
-	char buf[128];
-	tstruct = *localtime(&now);
-	strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
-	cache.append(std::string(buf));
-	cache.append(" ---/\n\n");
+        cache.append("\n/--- Creation Date : ");
+        time_t now = time(0);
+        struct tm tstruct;
+        char buf[128];
+        tstruct = *localtime(&now);
+        strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
+        cache.append(std::string(buf));
+        cache.append(" ---/\n\n");
         fpath = path;
     }
     
     inline void append(std::string str) {
         cache.append("\n");
-	time_t now = time(0);
-	struct tm tstruct;
-	char buf[128];
-	tstruct = *localtime(&now);
-	strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
-	cache.append(std::string(buf));
-	cache.append(" : ");
+        time_t now = time(0);
+        struct tm tstruct;
+        char buf[128];
+        tstruct = *localtime(&now);
+        strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
+        cache.append(std::string(buf));
+        cache.append(" : ");
         cache.append(str);
         cache.append("\n");
         if (auto_s) {
@@ -75,53 +75,53 @@ public:
     }
 
     inline void append(int str) {
-	cache.append("\n");
-	time_t now = time(0);
-	struct tm tstruct;
-	char buf[128];
-	tstruct = *localtime(&now);
-	strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
-	cache.append(std::string(buf));
-	cache.append(" : ");
-	cache.append(std::to_string(str));
-	cache.append("\n");
-	if (auto_s) {
-	    this->save(NEW_LOG);
-	}
+        cache.append("\n");
+        time_t now = time(0);
+        struct tm tstruct;
+        char buf[128];
+        tstruct = *localtime(&now);
+        strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
+        cache.append(std::string(buf));
+        cache.append(" : ");
+        cache.append(std::to_string(str));
+        cache.append("\n");
+        if (auto_s) {
+            this->save(NEW_LOG);
+        }
     }
 	
     template<typename ...Args>
     inline void append_arg(std::string str, Args ...args) {
-	char memr[MAX_LEN];
-	sprintf(memr, str.c_str(), args...);
-	cache.append("\n");
-	time_t now = time(0);
-	struct tm tstruct;
-	char buf[128];
-	tstruct = *localtime(&now);
-	strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
-	cache.append(std::string(buf));
-	cache.append(" : ");
-	cache.append(memr);
-	cache.append("\n");
-	if (auto_s) {
-	    this->save(NEW_LOG);
-	}
+        char memr[MAX_LEN];
+        sprintf(memr, str.c_str(), args...);
+        cache.append("\n");
+        time_t now = time(0);
+        struct tm tstruct;
+        char buf[128];
+        tstruct = *localtime(&now);
+        strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
+        cache.append(std::string(buf));
+        cache.append(" : ");
+        cache.append(memr);
+        cache.append("\n");
+        if (auto_s) {
+            this->save(NEW_LOG);
+        }
     }
 
     template<typename ...Args>
     inline void append_arg_mode(std::string str, int modee, Args ...args) {
-	char memr[MAX_LEN];
-	sprintf(memr, str.c_str(), args...);
-	cache.append("\n");
-	time_t now = time(0);
-	struct tm tstruct;
-	char buf[128];
-	tstruct = *localtime(&now);
-	strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
-	cache.append(std::string(buf));
-	cache.append(" : ");
-	cache.append(memr);
+        char memr[MAX_LEN];
+        sprintf(memr, str.c_str(), args...);
+        cache.append("\n");
+        time_t now = time(0);
+        struct tm tstruct;
+        char buf[128];
+        tstruct = *localtime(&now);
+        strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
+        cache.append(std::string(buf));
+        cache.append(" : ");
+        cache.append(memr);
         cache.append("\n");
         if (auto_s) {
             this->save(modee);
@@ -145,7 +145,7 @@ public:
     }
     
     inline void erase() {
-	struct stat buffer, stat_buf;
+        struct stat buffer, stat_buf;
         if ((stat(fpath.c_str(), &buffer) == 0) && (stat(fpath.c_str(), &stat_buf) == 0 ? stat_buf.st_size : -1) > 0) {
             remove(fpath.c_str());
         }
@@ -158,7 +158,7 @@ public:
         } else if (mode == APPEND_LOG) {
             std::ifstream in(fpath.c_str());
             std::stringstream data;
-	    struct stat buffer, stat_buf;
+            struct stat buffer, stat_buf;
             if ((stat(fpath.c_str(), &buffer) == 0) && (stat(fpath.c_str(), &stat_buf) == 0 ? stat_buf.st_size : -1) > 0) {
                 data << in.rdbuf();
                 data << "\n";
