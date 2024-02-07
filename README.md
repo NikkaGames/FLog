@@ -20,6 +20,8 @@ int main() {
 
    logger->append_arg("str: %s, %p, %d", "a word", logger->get_address_ptr(), 3828); //logs multiple values.
 
+   logger->append_arg_mode("str: %s, %p, %d", NEW_LOG, "a word", logger->get_address_ptr(), 3828); //logs multiple values using custom save mode.
+
    logger->save(NEW_LOG); //saves the logs in file which is stored in memory, don't use this when auto save is turned on.
 
    logger->save(APPEND_LOG); //saves the logs in file which is stored in memory and also preserves the old content which was in file if it exists, don't use this when auto save is turned on.
