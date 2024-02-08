@@ -39,7 +39,7 @@ private:
     bool auto_s = false;
 
 public:
-    inline FLog(std::string path) {
+    FLog(std::string path) {
         sprintf(instance_address, "%p", this);
         cache.append("/--- New FLog Instance / MemPtr : ");
         cache.append(instance_address);
@@ -58,7 +58,7 @@ public:
         fpath = path;
     }
     
-    inline void append(std::string str) {
+    void append(std::string str) {
         cache.append("\n");
         time_t now = time(0);
         struct tm tstruct;
@@ -74,7 +74,7 @@ public:
         }
     }
 
-    inline void append(int str) {
+    void append(int str) {
         cache.append("\n");
         time_t now = time(0);
         struct tm tstruct;
@@ -91,7 +91,7 @@ public:
     }
 	
     template<typename ...Args>
-    inline void append_arg(std::string str, Args ...args) {
+    void append_arg(std::string str, Args ...args) {
         char memr[MAX_LEN];
         sprintf(memr, str.c_str(), args...);
         cache.append("\n");
@@ -110,7 +110,7 @@ public:
     }
 
     template<typename ...Args>
-    inline void append_arg_mode(std::string str, int modee, Args ...args) {
+    void append_arg_mode(std::string str, int modee, Args ...args) {
         char memr[MAX_LEN];
         sprintf(memr, str.c_str(), args...);
         cache.append("\n");
@@ -128,30 +128,30 @@ public:
         }
     }
 	
-    inline std::string get_address_str() {
+    std::string get_address_str() {
         return std::string(instance_address);
     }
     
-    inline uintptr_t get_address_ptr() {
+    uintptr_t get_address_ptr() {
         return (uintptr_t) this;
     }
     
-    inline void autosave(bool state) {
+    void autosave(bool state) {
         auto_s = state;
     }
     
-    inline void clear() {
+    void clear() {
         cache = "";
     }
     
-    inline void erase() {
+    void erase() {
         struct stat buffer, stat_buf;
         if ((stat(fpath.c_str(), &buffer) == 0) && (stat(fpath.c_str(), &stat_buf) == 0 ? stat_buf.st_size : -1) > 0) {
             remove(fpath.c_str());
         }
     }
     
-    inline void save(S_MODE mode) {
+    void save(S_MODE mode) {
         if (mode == NEW_LOG) {
             std::ofstream out(fpath.c_str());
             out << cache;
