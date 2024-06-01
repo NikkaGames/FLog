@@ -39,7 +39,7 @@ private:
     bool auto_s = false;
 
 public:
-    FLog(std::string path) {
+    FLog(std::string path, bool autosave_c = true) {
         sprintf(instance_address, "%p", this);
         cache.append("/--- New FLog Instance / MemPtr : ");
         cache.append(instance_address);
@@ -55,6 +55,7 @@ public:
         strftime(buf, sizeof(buf), "%Y-%m-%d | %X", &tstruct);
         cache.append(std::string(buf));
         cache.append(" ---/\n\n");
+	auto_s = autosave_c;
         fpath = path;
     }
     
