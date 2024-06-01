@@ -12,7 +12,7 @@ FLog* logger = new FLog("/storage/logs.txt"); //creates FLog instance.
 
 int main() {
 
-   logger->autosave(true); //enables auto save, it's off by default.
+   logger->autosave(true); //enables auto save, it's on by default.
 
    logger->append("just a string"); //logs string value.
 
