@@ -156,23 +156,28 @@ public:
         if (mode == NEW_LOG) {
             std::ofstream out(fpath.c_str());
             out << cache;
+	    out.close();
         } else if (mode == APPEND_LOG) {
             std::ifstream in(fpath.c_str());
             std::stringstream data;
             struct stat buffer, stat_buf;
             if ((stat(fpath.c_str(), &buffer) == 0) && (stat(fpath.c_str(), &stat_buf) == 0 ? stat_buf.st_size : -1) > 0) {
                 data << in.rdbuf();
+		in.close();
                 data << "\n";
                 data << cache;
                 std::ofstream out(fpath.c_str());
                 out << data.str();
+		out.close();
             } else {
                 std::ofstream out(fpath.c_str());
                 out << cache;
+		out.close();
             }
         } else {
             std::ofstream out(fpath.c_str());
             out << "Failed to save logs!\nException : Unknown saving mode!";
+	    out.close();
         }
     }
 };
